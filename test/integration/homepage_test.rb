@@ -65,6 +65,18 @@ class HomepageTest < ActionDispatch::IntegrationTest
     assert_includes response.headers["Cache-Control"], "public"
   end
 
+  test "Arabic homepage uses RTL layout, translations, and private caching" do
+    get root_path(locale: "ar")
+
+    assert_response :success
+    assert_select "html[lang='ar'][dir='rtl']"
+    assert_select "a[href='/pages/about?locale=ar']"
+    assert_select "body", text: /ابحث وثبّت وانشر/
+    assert_includes response.headers["Cache-Control"], "private"
+    assert_includes response.headers["Cache-Control"], "no-store"
+    assert_nil response.headers["Surrogate-Control"]
+  end
+
   test "request with non empty flash hash does not set public cache headers" do
     get update_email_confirmations_path(token: "invalid_token")
 
