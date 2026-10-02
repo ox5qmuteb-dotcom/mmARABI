@@ -58,11 +58,7 @@ class ApplicationController < ActionController::Base
   end
 
   def with_arabic_locale(&action)
-    I18n.with_locale(:ar) do
-      action.call
-    ensure
-      disable_shared_cache_for_arabic
-    end
+    I18n.with_locale(:ar, &action)
   end
 
   def arabic_html_request?

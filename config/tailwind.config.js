@@ -17,7 +17,7 @@ module.exports = {
         sm: "480px", // Below this is a phone in portrait mode
       },
       fontFamily: {
-        sans: ['"Titillium Web"', ...defaultTheme.fontFamily.sans],
+        sans: ['"Titillium Web"', '"Noto Sans Arabic"', ...defaultTheme.fontFamily.sans],
         mono: ['"Fira Code"', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {

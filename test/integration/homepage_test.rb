@@ -75,6 +75,17 @@ class HomepageTest < ActionDispatch::IntegrationTest
     assert_includes response.headers["Cache-Control"], "private"
     assert_includes response.headers["Cache-Control"], "no-store"
     assert_nil response.headers["Surrogate-Control"]
+    assert_nil response.headers["Set-Cookie"]
+    assert_equal :en, I18n.locale
+  end
+
+  test "Arabic locale renders on internal pages" do
+    get page_path("about", locale: "ar")
+
+    assert_response :success
+    assert_select "html[lang='ar'][dir='rtl']"
+    assert_includes response.body, I18n.t("pages.about.title", locale: :ar)
+    assert_includes response.headers["Cache-Control"], "private"
   end
 
   test "request with non empty flash hash does not set public cache headers" do
