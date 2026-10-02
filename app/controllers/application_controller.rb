@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
 
   # TODO: Separate locales by path and re-enable
   # before_action :set_locale
+  around_action :with_arabic_locale, if: :arabic_html_request?
+  before_action :disable_shared_cache_for_arabic, if: :arabic_html_request?
   before_action :reject_null_char_param
   before_action :reject_path_params_param
   before_action :reject_null_char_cookie
@@ -49,6 +51,27 @@ class ApplicationController < ActionController::Base
     session[:locale] = params[:locale] if params[:locale]
   rescue I18n::InvalidLocale
     I18n.locale = I18n.default_locale
+  end
+
+  def default_url_options
+    super.tap { |options| options[:locale] = :ar if I18n.locale == :ar }
+  end
+
+  def with_arabic_locale(&action)
+    I18n.with_locale(:ar) do
+      action.call
+    ensure
+      disable_shared_cache_for_arabic
+    end
+  end
+
+  def arabic_html_request?
+    params[:locale] == "ar" && request.format.html?
+  end
+
+  def disable_shared_cache_for_arabic
+    response.headers["Cache-Control"] = "private, no-store"
+    response.headers.delete("Surrogate-Control")
   end
 
   def set_user_tag
@@ -92,10 +115,12 @@ class ApplicationController < ActionController::Base
   end
 
   def cacheable_request?
-    !signed_in? && flash.empty?
+    !arabic_html_request? && !signed_in? && flash.empty?
   end
 
   def cache_expiry_headers(expiry: 60, fastly_expiry: 3600)
+    return disable_shared_cache_for_arabic if arabic_html_request?
+
     expires_in expiry, public: true
     fastly_expires_in fastly_expiry
   end

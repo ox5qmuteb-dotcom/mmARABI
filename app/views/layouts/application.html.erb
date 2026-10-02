@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%= I18n.locale %>">
+<html lang="<%= I18n.locale %>" dir="<%= I18n.locale.to_s == "ar" ? "rtl" : "ltr" %>">
 <head>
   <title><%= page_title %></title>
   <meta charset="UTF-8">
@@ -183,6 +183,7 @@
               <li><%= link_to t("layouts.application.footer.status"), "https://status.rubygems.org", class: "hover:text-neutral-600" %></li>
               <li><%= link_to t("layouts.application.footer.security"), page_path("security"), class: "hover:text-neutral-600" %></li>
               <li><%= mail_to "support@rubygems.org", t('layouts.application.footer.help'), class: "hover:text-neutral-600" %></li>
+              <li><%= link_to(I18n.locale == :ar ? "English" : "العربية", url_for(locale: I18n.locale == :ar ? :en : :ar), class: "hover:text-neutral-600") %></li>
             </ul>
           </nav>
           <div class="flex space-x-4">

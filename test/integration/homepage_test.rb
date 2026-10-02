@@ -71,7 +71,7 @@ class HomepageTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "html[lang='ar'][dir='rtl']"
     assert_select "a[href='/pages/about?locale=ar']"
-    assert_select "body", text: /ابحث وثبّت وانشر/
+    assert_select "body", text: /اعثر على حزم Ruby/
     assert_includes response.headers["Cache-Control"], "private"
     assert_includes response.headers["Cache-Control"], "no-store"
     assert_nil response.headers["Surrogate-Control"]

@@ -1,6 +1,18 @@
 # RubyGems.org (née Gemcutter)
 The Ruby community's gem host.
 
+## النسخة العربية
+
+يوفّر هذا المستودع نسخة عربية من واجهة RubyGems.org، مع تخطيط من اليمين إلى اليسار وترجمة للعناصر الرئيسية في الصفحة الرئيسية والتنقل والبحث وتسجيل الدخول.
+
+لعرض الواجهة العربية، أضف `?locale=ar` إلى عنوان الصفحة. استخدم رابط اللغة في أسفل الصفحة للتبديل بين العربية والإنجليزية. تُقدَّم الصفحات العربية بتخزين خاص لمنع مشاركة المحتوى بين اللغات.
+
+يمكن التحقق من التغييرات بتشغيل:
+
+```sh
+bin/rails test test/integration/homepage_test.rb test/integration/i18n_test.rb
+```
+
 ## Purpose
 
 * Provide a better API for dealing with gems

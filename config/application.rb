@@ -47,7 +47,7 @@ module Gemcutter
 
     config.time_zone = "UTC"
     config.encoding  = "utf-8"
-    config.i18n.available_locales = [:en, :nl, "zh-CN", "zh-TW", "pt-BR", :fr, :es, :de, :ja]
+    config.i18n.available_locales = [:en, :nl, "zh-CN", "zh-TW", "pt-BR", :fr, :es, :de, :ja, :ar]
     config.i18n.fallbacks = [:en]
 
     config.middleware.insert 0, Rack::Sanitizer
